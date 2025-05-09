@@ -1,0 +1,21 @@
+version: "3.8"
+
+services:
+  latentsync:
+    image: latentsync
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: latentsync
+    ports:
+      - "7860:7860"
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+      - NVIDIA_DRIVER_CAPABILITIES=compute,utility
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
